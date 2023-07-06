@@ -1,4 +1,5 @@
 let express = require("express");
+let {v4: uuid} = require('uuid');
 let app = express();
 
 let bodyParser = require("body-parser");
@@ -7,37 +8,37 @@ let bodyParser = require("body-parser");
 
 let studentList = [
   {
-    id: Date.now(),
+   id: uuid(),
     name: "joy",
     age: 18,
     level: 2,
   },
   {
-    id: Date.now(),
+   id: uuid(),
     name: "joel",
     age: 20,
     level: 1,
   },
   {
-    id: Date.now(),
+   id: uuid(),
     name: "james",
     age: 25,
     level: 3,
   },
   {
-    id: Date.now(),
+   id: uuid(),
     name: "clint",
     age: 22,
     level: 2,
   },
   {
-    id: Date.now(),
+   id: uuid(),
     name: "stalins",
     age: 33,
     level: 1,
   },
   {
-    id: Date.now(),
+   id: uuid(),
     name: "mary",
     age: 16,
     level: 3,
@@ -77,6 +78,7 @@ let deleteStudent = (req, res) => {
     return student.id != id;
   });
   studentList = newStudentList;
+  console.log(newStudentList);
   res.json({
     status: `student number${id} was deleted form the list`,
     studentList,
@@ -84,7 +86,7 @@ let deleteStudent = (req, res) => {
 };
 
 let createStudent = (req, res) => {
-  let id = Date.now()
+  let id = Date.now();
   const { name, age, level } = req.body;
   let newStudent = {
     id,
