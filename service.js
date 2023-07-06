@@ -61,14 +61,13 @@ let getStudentByID = (req, res) => {
 let etditStudent = (req, res) => {
   let { id } = req.params;
   const { name, age, level } = req.body;
-  let studentToEddit = { id, name, age, level };
+  let studentToEddit = { id, ...req.body };
   console.log(studentToEddit);
 
   let listToEdit = studentList.filter((student) => {
     return student.id != id;
   });
-  listToEdit = [...listToEdit, studentToEddit];
-  studentList = listToEdit;
+  studentList = [...listToEdit, studentToEddit];
   res.json(studentList);
 };
 
@@ -86,13 +85,10 @@ let deleteStudent = (req, res) => {
 };
 
 let createStudent = (req, res) => {
-  let id = Date.now();
-  const { name, age, level } = req.body;
+  let id = uuid();
   let newStudent = {
     id,
-    name,
-    age,
-    level,
+    ...req.body,
   };
   studentList = [...studentList, newStudent];
   res.json(studentList);
@@ -103,10 +99,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routes
-app.get("/", getStudents).get("/student/:id", getStudentByID);
-app.post("/student/create/", createStudent);
-app.post("/student/:id", etditStudent);
-app.delete("/student/delete/:id", deleteStudent);
-app.get("/student/delete/:id", deleteStudent);
+app.get("/students", getStudents).get("/student/:id", getStudentByID);
+app.post("/students/create/", createStudent);
+app.post("/students/update/:id", etditStudent);
+app.delete("/students/delete/:id", deleteStudent);
+app.get("/students/delete/:id", deleteStudent);
 
 app.listen(5000);
