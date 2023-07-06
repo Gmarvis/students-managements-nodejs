@@ -7,37 +7,37 @@ let bodyParser = require("body-parser");
 
 let studentList = [
   {
-    id: 1,
+    id: Date.now(),
     name: "joy",
     age: 18,
     level: 2,
   },
   {
-    id: 2,
+    id: Date.now(),
     name: "joel",
     age: 20,
     level: 1,
   },
   {
-    id: 3,
+    id: Date.now(),
     name: "james",
     age: 25,
     level: 3,
   },
   {
-    id: 4,
+    id: Date.now(),
     name: "clint",
     age: 22,
     level: 2,
   },
   {
-    id: 5,
+    id: Date.now(),
     name: "stalins",
     age: 33,
     level: 1,
   },
   {
-    id: 6,
+    id: Date.now(),
     name: "mary",
     age: 16,
     level: 3,
@@ -84,7 +84,8 @@ let deleteStudent = (req, res) => {
 };
 
 let createStudent = (req, res) => {
-  const { id, name, age, level } = req.body;
+  let id = Date.now()
+  const { name, age, level } = req.body;
   let newStudent = {
     id,
     name,
