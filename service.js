@@ -1,5 +1,5 @@
 let express = require("express");
-let {v4: uuid} = require('uuid');
+let { v4: uuid } = require("uuid");
 let app = express();
 
 let bodyParser = require("body-parser");
@@ -8,37 +8,37 @@ let bodyParser = require("body-parser");
 
 let studentList = [
   {
-   id: uuid(),
+    id: uuid(),
     name: "joy",
     age: 18,
     level: 2,
   },
   {
-   id: uuid(),
+    id: uuid(),
     name: "joel",
     age: 20,
     level: 1,
   },
   {
-   id: uuid(),
+    id: uuid(),
     name: "james",
     age: 25,
     level: 3,
   },
   {
-   id: uuid(),
+    id: uuid(),
     name: "clint",
     age: 22,
     level: 2,
   },
   {
-   id: uuid(),
+    id: uuid(),
     name: "stalins",
     age: 33,
     level: 1,
   },
   {
-   id: uuid(),
+    id: uuid(),
     name: "mary",
     age: 16,
     level: 3,
