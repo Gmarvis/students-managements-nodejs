@@ -1,108 +1,79 @@
 let express = require("express");
 let { v4: uuid } = require("uuid");
 let app = express();
-
+let dotenv = require("dotenv");
+dotenv.config();
 let bodyParser = require("body-parser");
 
-// student object
+// const sequel = require("sequel")
 
-let studentList = [
-  {
-    id: uuid(),
-    name: "joy",
-    age: 18,
-    level: 2,
-  },
-  {
-    id: uuid(),
-    name: "joel",
-    age: 20,
-    level: 1,
-  },
-  {
-    id: uuid(),
-    name: "james",
-    age: 25,
-    level: 3,
-  },
-  {
-    id: uuid(),
-    name: "clint",
-    age: 22,
-    level: 2,
-  },
-  {
-    id: uuid(),
-    name: "stalins",
-    age: 33,
-    level: 1,
-  },
-  {
-    id: uuid(),
-    name: "mary",
-    age: 16,
-    level: 3,
-  },
-];
+let Sequelize = require("sequelize");
+const student = require("./models/student");
+const Book = require("./models/book");
+const Cohort = require("./models/cohort");
+const Student = require("./models/student");
+const {
+  getCohorts,
+  getCohortbyId,
+  createCohorts,
+  updateCohort,
+  deleteCohort,
+} = require("./controllers/cohort");
+const {
+  getStudents,
+  getStudentByID,
+  updateStudent,
+  deleteStudent,
+  createStudent,
+} = require("./controllers/student");
 
-// callbacks
-let getStudents = (req, res) => {
-  res.json(studentList);
-};
-
-let getStudentByID = (req, res) => {
-  let { id } = req.params;
-  let studentId = studentList.find((student) => {
-    return student.id == id;
-  });
-  res.json(studentId);
-};
-
-let etditStudent = (req, res) => {
-  let { id } = req.params;
-  const { name, age, level } = req.body;
-  let studentToEddit = { id, ...req.body };
-  console.log(studentToEddit);
-
-  let listToEdit = studentList.filter((student) => {
-    return student.id != id;
-  });
-  studentList = [...listToEdit, studentToEddit];
-  res.json(studentList);
-};
-
-let deleteStudent = (req, res) => {
-  let { id } = req.params;
-  let newStudentList = studentList.filter((student) => {
-    return student.id != id;
-  });
-  studentList = newStudentList;
-  console.log(newStudentList);
-  res.json({
-    status: `student number${id} was deleted form the list`,
-    studentList,
-  });
-};
-
-let createStudent = (req, res) => {
-  let id = uuid();
-  let newStudent = {
-    id,
-    ...req.body,
-  };
-  studentList = [...studentList, newStudent];
-  res.json(studentList);
-};
+const {
+  getBooks,
+  getBookById,
+  updateBook,
+  creacteBook,
+  deleteBook,
+} = require("./controllers/book");
 
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// routes
-app.get("/students", getStudents).get("/student/:id", getStudentByID);
+// routes for students
+
+app.get("/students", getStudents).get("/students/:id", getStudentByID);
 app.post("/students/create/", createStudent);
-app.post("/students/update/:id", etditStudent);
+app.post("/students/update/:id", updateStudent);
 app.delete("/students/delete/:id", deleteStudent);
 app.get("/students/delete/:id", deleteStudent);
 
+// routes for cohort
+
+app.get("/cohorts", getCohorts);
+app.post("/cohorts/create", createCohorts);
+app.get("/cohorts/:id", getCohortbyId);
+app.post("/cohorts/update/:id", updateCohort);
+app.delete("/cohorts/delete/:id", deleteCohort);
+
+// routes for book
+
+app.get("/books", getBooks).get("/book/:id", getBookById);
+app.post("/books/create", creacteBook).post("/books/update/:id", updateBook);
+app.delete("/books/delete/:id", deleteBook);
+
 app.listen(5000);
+
+// {
+//   "student":{
+//     "name": "Ntamfu collins",
+//     "level": "1st",
+//     "street": "Simbock",
+//     "dob": "1996-07-12",
+//     "phone": "23777877572",
+//     "town": "younde",
+//     "country": "Cameroon",
+//     "sex": "Male",
+//     "email": "ntamfucollins@gmail.com",
+//     "score": "68"
+//   }
+// }
