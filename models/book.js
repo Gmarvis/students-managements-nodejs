@@ -24,7 +24,7 @@ const Book = sequel.define("books", {
 Book.belongsTo(Cohort);
 
 sequel
-  .sync()
+  .sync({ alter: true })
 
   .then(() => {
     console.log("book table was created successfully");
@@ -33,4 +33,4 @@ sequel
     console.log("An error occured while creating Book table", error);
   });
 
-module.exports = Book
+module.exports = Book;

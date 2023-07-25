@@ -1,3 +1,4 @@
+const Book = require("../models/book");
 const Cohort = require("../models/cohort");
 const Student = require("../models/student");
 
@@ -21,6 +22,9 @@ let getStudentByID = async (req, res) => {
     },
     include: {
       model: Cohort,
+    },
+    include: {
+      model: Book,
     },
   })
     .then((resp) => {
@@ -70,7 +74,13 @@ let updateStudent = async (req, res) => {
 
 let createStudent = async (req, res) => {
   let student = req.body.student;
-  Student.create(student)
+  console.log(student);
+
+  Student.create(student, {
+    include: {
+      model: Book,
+    },
+  })
     .then(() => {
       res.send("Ok");
     })

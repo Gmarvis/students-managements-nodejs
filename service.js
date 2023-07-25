@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 
 // routes for students
 
-app.get("/students", getStudents).get("/student/:id", getStudentByID);
+app.get("/students", getStudents).get("/students/:id", getStudentByID);
 app.post("/students/create/", createStudent);
 app.post("/students/update/:id", updateStudent);
 app.delete("/students/delete/:id", deleteStudent);
